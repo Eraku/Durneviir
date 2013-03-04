@@ -88,13 +88,14 @@ public class Drive implements Movement {
         _x_prev = x;
         _y_prev = y;
     }
-    public void lockedmotors() {
+    public void locked() {
         left_drive.set(0.0);
         right_drive.set(0.0);
     }
 
     public void setup() {
     }
+
 }
 //   public FRCDrive(FRCGameMode mode) {
 //        this._mode = mode;

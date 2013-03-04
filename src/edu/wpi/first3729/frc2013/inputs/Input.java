@@ -23,12 +23,13 @@ public class Input{
     public static final int tank = 1;
     public static final int locked = 2;
     
-    public Input(int number) {
+    public Input() {
         this._joy0 = new Joystick(1);
         this._joy1 = new Joystick(2);
         this._controller0 = new Joystick(3);
         this._controller1 = new Joystick(4);
     }
+
     public void setmode(int m) {
         this.drive_mode = m;
     }

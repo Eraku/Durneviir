@@ -47,7 +47,7 @@ public class Teleoperated extends GameMode {
     }
     public void init() {
         this._input_manager.setmode(Input.arcadecontroller);
-        this._drive.lockedmotors();
+        this._drive.locked();
     }
     public void run() {
         // Update input fields
@@ -62,7 +62,7 @@ public class Teleoperated extends GameMode {
                 this._drive.tankdrive(this.left, this.right);
                 break;
             case Input.locked:
-                this._drive.lockedmotors();
+                this._drive.locked();
                 break;
         }
     }
