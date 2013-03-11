@@ -29,26 +29,16 @@ public class ControllerInterlink extends Input {
     public double get_y() {
          return Utility.expo(Utility.normalize(super.get_y(), Params.YMIN, Params.YMAX), Params.YEXPO);
     }
-
-    public double get_z() {
-         return 0;
-    }
-
-    public double get_w() {
-         return 0;
-    }
     
     public void left_stick() {
         this._joy0.setAxisChannel(Joystick.AxisType.kX, LEFT_STICK);
         this._joy0.setAxisChannel(Joystick.AxisType.kY, LEFT_STICK);
-        this._joy0.setAxisChannel(Joystick.AxisType.kZ, LEFT_STICK);
         this._joy0.setAxisChannel(Joystick.AxisType.kThrottle, LEFT_STICK);
     }
     
     public void right_stick() {
         this._joy1.setAxisChannel(Joystick.AxisType.kX, RIGHT_STICK);
         this._joy1.setAxisChannel(Joystick.AxisType.kY, RIGHT_STICK);
-        this._joy1.setAxisChannel(Joystick.AxisType.kZ, RIGHT_STICK);
         this._joy1.setAxisChannel(Joystick.AxisType.kThrottle, RIGHT_STICK);
     }
 }
