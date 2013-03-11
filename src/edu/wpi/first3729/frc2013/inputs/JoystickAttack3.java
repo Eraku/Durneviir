@@ -14,8 +14,8 @@ import edu.wpi.first3729.frc2013.utilities.*;
  * @author teddy
  */
 public class JoystickAttack3 extends Input {
-    public JoystickAttack3(int number) {
-        super(number);
+    public JoystickAttack3(int joy) {
+        super(joy);
     }
 
     public double get_x() {
