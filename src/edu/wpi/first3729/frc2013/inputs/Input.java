@@ -23,14 +23,14 @@ public class Input{
     public static final int tank = 1;
     public static final int locked = 2;
     
-    public Input() {
+    public Input(int number) {
         this._joy0 = new Joystick(1);
         this._joy1 = new Joystick(2);
         this._controller0 = new Joystick(3);
-        this._controller1 = new Joystick(4);
+        this._controller1 = new Joystick(4);   
     }
 
-    public void setmode(int m) {
+    public void setdrivemode(int m) {
         this.drive_mode = m;
     }
     public boolean checkbutton(int joystick, int buttonid) {
@@ -48,18 +48,18 @@ public class Input{
         }
     }
     
-    public int getmode() {
+    public int getdrivemode() {
         return drive_mode;
     }
     
     public double get_x() {
         switch (drive_mode) {
             case arcade:
-                return Utility.expo(Utility.normalize(this._joy1.getX(), -1.0, 1.0), Params.JOYEXPO);
+                return this._joy1.getX();
             case arcadecontroller:
-                return Utility.expo(Utility.normalize(this._controller0.getX(), Params.XMIN, Params.XMAX), Params.XEXPO) * -1.0;
+                return this._controller1.getX()*-1.0;
             case tank:
-                return Utility.expo(Utility.normalize(this._joy0.getY(), -1.0, 1.0) * -1.0, Params.JOYEXPO);
+                return this._joy0.getX()*-1.0;
             case locked:
                 return 0;
             default:
@@ -71,11 +71,11 @@ public class Input{
     public double get_y() {
         switch (drive_mode) {
             case arcade:
-                return Utility.expo(Utility.normalize(this._joy1.getY(), -1.0, 1.0) * -1.0, Params.JOYEXPO);
+                return this._joy1.getY();
             case arcadecontroller:
-                return Utility.expo(Utility.normalize(this._controller0.getY(), Params.YMIN, Params.YMAX), Params.YEXPO);
+                return this._controller0.getY();
             case tank:
-                return Utility.expo(Utility.normalize(this._joy1.getY(), -1.0, 1.0) * -1.0, Params.JOYEXPO);
+                return this._joy1.getY();
             case locked:
                 return 0;
             default:
@@ -83,6 +83,41 @@ public class Input{
                 return get_y();
         }
     }
+     public double getthrottle(int joy) {
+        switch (drive_mode) {
+            case arcade:
+                switch (joy) {
+                    case 0:
+                        return this._joy0.getThrottle();
+                    case 1:
+                        return this._joy1.getThrottle();
+                    default:
+                        joy = 0;
+                        return getthrottle(joy);
+                }
+            case arcadecontroller:
+                return this._joy0.getThrottle();
+            case tank:
+                switch (joy) {
+                    case 0:
+                        return this._joy0.getThrottle();
+                    case 1:
+                        return this._joy1.getThrottle();
+                    case 2:
+                        return this._controller0.getThrottle();  // 'Controller' is actually 3rd joystick in this case
+                    case 3:
+                        return this._controller1.getThrottle();
+                    default:
+                        joy = 0;
+                        return getthrottle(joy);
+                }
+            case locked:
+                return 0;
+            default:
+                drive_mode = Params.default_drive_mode;
+                return getthrottle(0);
+        }
+     }
     public double gettwist(int joy) {
         switch (drive_mode) {
             case arcade:
@@ -103,7 +138,7 @@ public class Input{
                     case 1:
                         return this._joy1.getTwist();
                     case 2:
-                        return this._controller0.getTwist();  // 'Controller' is actually 3rd joystick
+                        return this._controller0.getTwist();  // 'Controller' is actually 3rd joystick in this case
                     case 3:
                         return this._controller1.getTwist();
                     default:
