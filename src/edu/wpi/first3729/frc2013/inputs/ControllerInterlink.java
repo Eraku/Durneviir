@@ -18,8 +18,8 @@ public class ControllerInterlink extends Input {
     private static final int LEFT_STICK = 0;
     private static final int RIGHT_STICK = 1;
     
-    public ControllerInterlink(int number) {
-        super(number);
+    public ControllerInterlink(int joy) {
+        super(joy);
     }
     
     public double get_x() {
