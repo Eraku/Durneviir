@@ -23,18 +23,19 @@ public class Input{
     public static final int tank = 1;
     public static final int locked = 2;
     
-    public Input(int number) {
+    public Input(int joy) {
         this._joy0 = new Joystick(1);
         this._joy1 = new Joystick(2);
         this._controller0 = new Joystick(3);
         this._controller1 = new Joystick(4);   
     }
+    public Input(){}
 
     public void setdrivemode(int m) {
         this.drive_mode = m;
     }
-    public boolean checkbutton(int joystick, int buttonid) {
-        switch (joystick) {
+    public boolean checkbutton(int joy, int buttonid) {
+        switch (joy) {
             case 0:
                 return this._joy0.getRawButton(buttonid);
             case 1:
@@ -73,7 +74,7 @@ public class Input{
             case arcade:
                 return this._joy1.getY();
             case arcadecontroller:
-                return this._controller0.getY();
+                return this._controller1.getY();
             case tank:
                 return this._joy1.getY();
             case locked:
