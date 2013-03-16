@@ -58,8 +58,8 @@ public abstract class GameMode implements Movement {
     public static GameMode toteleoperated(GameMode mode, Robot robot) {
         return toteleoperated(mode, mode._robot);
     }   
-    public static GameMode toteleoperated(GameMode mode, Robot robot, Input imanager, Drive drv) {
-        GameMode ret = new Teleoperated(imanager, drv, robot);
+    public static GameMode toteleoperated(GameMode mode, Robot robot, Input imanager, Drive drv, Shooter shoot) {
+        GameMode ret = new Teleoperated(imanager, shoot, drv, robot);
         if (mode != null) {
             ret._drive = mode._drive;
 //            ret._climber = mode._climber;

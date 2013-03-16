@@ -83,4 +83,18 @@ public class Utility {
     public static double expo(double x, double a) {
         return (a * (x * x * x) + (1 - a) * x);
     }
+    
+    
+    public static double ramp(double desired_output, double current_output, double increment) {
+        if (desired_output <= .1 && desired_output >= -.1) {
+            increment /= 2;
+        }
+        if (desired_output < current_output) {
+            return (current_output - increment) < 0.01 && (current_output - increment) > -0.01 ? 0 : current_output - increment;
+        } else if (desired_output > current_output) {
+            return (current_output + increment) < 0.01 && (current_output + increment) > -0.01 ? 0 : current_output + increment;
+        } else {
+            return current_output < 0.01 && current_output > -0.01 ? 0 : current_output;
+        }
+    }
 }

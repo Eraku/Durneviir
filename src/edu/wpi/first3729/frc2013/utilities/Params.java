@@ -13,16 +13,14 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
 public class Params {
     public static final int left_drive_port = 1;
     public static final int right_drive_port = 2;
-    public static final int drive_joy =1;
+    public static final int drive_joy = 1;
     public static final int default_drive_mode = 2;
-//    public static final int shooter1_victor_port = 5;
-//    public static final int shooter2_victor_port = 6;
-//    public static final int intake_relay_port = 1;
-//    public static final int elevator_relay_port = 2;
-//    public static final int bridge_relay_port = 3;
-//    public static final int net_relay_port = 4;
-//    public static final int intake_sensor_digin_port = 1;
-//    public static final int bridge_limit_digin_port = 2;
+    public static final int shooterport = 5;
+    public static final int intake_relayport = 1;
+    public static final int angleadj_relayport = 2;
+    public static final int loader_relayport = 3;
+    public static final int intake0_limitswitch_port = 1;
+    public static final int intake1_limitswitch_port = 2;
     public static final double drive_creep_scale_factor = 0.2;
     public static final String cameraIP = "10.37.29.11";
     public static final AxisCamera.ResolutionT cameraresolution = AxisCamera.ResolutionT.k640x480;
@@ -30,20 +28,18 @@ public class Params {
     // Others
     //! The default expiration time of the Watchdog timer, in seconds
     public static final double default_watchdog_time = 3.0;
-//    //! Speed at which we drive in Autonomous
-//    public static final double auto_drive_speed = 0.35;
-//    //! Speed at which we turn in Autonomous
-//    public static final double auto_turn_speed = 0.65;
-//    //! Speed at which we brake in Autonomous
-//    public static final double auto_brake_speed = -0.6;
-//    public static final double shooter1_speed = 0.8;
-//    public static final double shooter2_speed = 0.8;
-//    //! Increment at which we ramp output from the x-axis
+    //! Speed at which we drive in Autonomous
+    public static final double auto_drivespeed = 0.35;
+    //! Speed at which we turn in Autonomous
+    public static final double auto_turnspeed = 0.65;
+    //! Speed at which we brake in Autonomous
+    public static final double auto_brakespeed = -0.6;
+    //! speed of shooting during Autonomous
+    public static final double auto_shooterspeed = 0.8;
+    //! Increment at which we ramp output from the x-axis
     public static final double x_ramp_increment = 0.1;
-//    //! Increment at which we ramp output from the y-axis
+    //! Increment at which we ramp output from the y-axis
     public static final double y_ramp_increment = 0.1;
-//    //! Increment at which we ramp output from the z-axis
-//    public static final double z_ramp_increment = 0.1;
     //! Default drive mode - 'a' = arcade, 'm' = mecanum, 't' = tank, 'l' = locked
     // Adjustment macros by Adam Bryant
     // Used in normalization functions
@@ -71,14 +67,11 @@ public class Params {
     public static final double ROTEXPO = 0.6;
     //! Exponential constant for modifying input from a joystick
     public static final double JOYEXPO = 0.5;
-//    /*
-//    // Image target-tracking stuff
+    // Image target-tracking stuff
 //    public static final int target_hue_low;
 //    public static final int target_hue_high;
 //    public static final int target_saturation_low;
 //    public static final int target_saturation_high;
 //    public static final int target_luminence_low;
 //    public static final int target_luminence_high;
-//    */
-    
 }

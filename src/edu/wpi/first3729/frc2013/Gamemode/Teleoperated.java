@@ -24,10 +24,11 @@ public class Teleoperated extends GameMode {
     private boolean polarity = false;
     private DriverStationLCD ds = DriverStationLCD.getInstance();
            
-    public Teleoperated(Input imanager, Drive drv, Robot robot) {
+    public Teleoperated(Input imanager, Shooter shoot, Drive drv, Robot robot) {
         super(robot);
         this._input_manager = imanager;
         this._drive = drv;
+        this._shooter = shoot;
     }
 
     /**
@@ -37,6 +38,7 @@ public class Teleoperated extends GameMode {
         this._input_manager.setdrivemode(Input.arcadecontroller);
         this._drive.locked();
         this.changedrivemode();
+//        this._shooter.;
     }
     public void changedrivemode() {
         // Button 6, arcade drive 2 joysticks
@@ -92,27 +94,6 @@ public class Teleoperated extends GameMode {
             this.y = this._input_manager.get_y() * scalefactor;
         }
         System.out.println("X: " + this.x + ", Y: " + this.y);
-        switch (drive_mode) {
-            default:
-            case Input.arcade:  // Arcade drive, two joysticks
-            case Input.arcadecontroller:  // Arcade drive w/ flight controller and joystick - buttons same
-//                this.loader_forward = this._input_manager.checkbutton(0, 5);
-//                this.loader_reverse = this._input_manager.checkbutton(0, 4);
-//                this.speed_up = this._input_manager.checkbutton(0, 3);
-//                this.speed_down = this._input_manager.checkbutton(0, 2);
-//                this.intake = this._input_manager.checkbutton(0, 1);
-                this.polarity = this._input_manager.checkbutton(2, 2);
-                break;
-            case Input.tank:  // Tank drive and
-            case Input.locked:  // Locked controls, nothing to do here
-//                lock various controls
-                break;
-        }
+        this.polarity = this._input_manager.checkbutton(2, 2);
     }
 }
-//        this.intake_sensor = new DigitalInput(Params.intake_sensor_digin_port);
-        /* If intake limit switch is hit, turn off intake relay
-        if (!this.intake_limit.get()) {
-            for (int i = 0; i < 10000; i++) { continue; }
-            this._manipulator.intake(Relay.Value.kOff);
-        }*/

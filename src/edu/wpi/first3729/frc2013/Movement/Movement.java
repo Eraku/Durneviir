@@ -8,5 +8,5 @@ package edu.wpi.first3729.frc2013.Movement;
  */
 public interface Movement {
     abstract void setup();
-//  abstract void getmode();  
+    abstract void run();  
 }

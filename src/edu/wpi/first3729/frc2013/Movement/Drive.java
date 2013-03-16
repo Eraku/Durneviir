@@ -37,6 +37,7 @@ public class Drive implements Movement {
         this._mode = mode;
         this.getinput();
     }
+    
     public Drive() {
         _y_prev = _x_prev = 0.0;
         left_drive = new Talon(Params.left_drive_port);
@@ -47,22 +48,10 @@ public class Drive implements Movement {
         this._y = this._input.get_y();
         this._input_manager.getdrivemode();
     }
-    private double ramp(double desired_output, double current_output, double increment) {
-        if (desired_output <= .1 && desired_output >= -.1) {
-            increment /= 2;
-        }
-        if (desired_output < current_output) {
-            return (current_output - increment) < 0.01 && (current_output - increment) > -0.01 ? 0 : current_output - increment;
-        } else if (desired_output > current_output) {
-            return (current_output + increment) < 0.01 && (current_output + increment) > -0.01 ? 0 : current_output + increment;
-        } else {
-            return current_output < 0.01 && current_output > -0.01 ? 0 : current_output;
-        }
-    }
-    
+      
     public void tankdrive(double left, double right) {
-       left = ramp(left, _x_prev, Params.x_ramp_increment);
-       right = ramp(right, _y_prev, Params.y_ramp_increment);
+       left = Utility.ramp(left, _x_prev, Params.x_ramp_increment);
+       right = Utility.ramp(right, _y_prev, Params.y_ramp_increment);
 
        left_drive.set(-left);
        right_drive.set(right);
@@ -71,8 +60,8 @@ public class Drive implements Movement {
     }
     
     public void arcadedrive(double x, double y) {
-        x = ramp(x, _x_prev, Params.x_ramp_increment);
-        y = ramp(y, _y_prev, Params.y_ramp_increment);
+        x = Utility.ramp(x, _x_prev, Params.x_ramp_increment);
+        y = Utility.ramp(y, _y_prev, Params.y_ramp_increment);
         if ((y <= 0.1 && y > 0) || (y >= -0.1 && y < 0)) {
             this.tankdrive(x * 0.75, -x * 0.75);
         }

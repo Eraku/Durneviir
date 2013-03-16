@@ -19,9 +19,9 @@ public class Input{
     protected Joystick _joy1;
     protected int drive_mode = Params.default_drive_mode;
     public static final int arcade = 0;
-    public static final int arcadecontroller = 3;
     public static final int tank = 1;
     public static final int locked = 2;
+    public static final int arcadecontroller = 3;
     
     public Input() {
         this._joy0 = new Joystick(1);
