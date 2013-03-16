@@ -23,14 +23,13 @@ public class Drive implements Movement {
     private double _x_prev;
     private double _y_prev;
     private double _x,_y;
-//    private drivemode;
 
     public Drive(GameMode ret) {
     }
-    
-//  public void drivemode(drivemode) {
+
+    public void run() {
         
-//  }
+    }
     public void setup(GameMode mode, Input imanager) {
         this._input_manager = imanager;
         this._input = new ControllerInterlink(Params.drive_joy);
@@ -46,18 +45,18 @@ public class Drive implements Movement {
     public void getinput() {
         this._x = this._input.get_x();
         this._y = this._input.get_y();
-        this._input_manager.getmode();
+        this._input_manager.getdrivemode();
     }
     private double ramp(double desired_output, double current_output, double increment) {
         if (desired_output <= .1 && desired_output >= -.1) {
             increment /= 2;
         }
         if (desired_output < current_output) {
-            return current_output - increment;
+            return (current_output - increment) < 0.01 && (current_output - increment) > -0.01 ? 0 : current_output - increment;
         } else if (desired_output > current_output) {
-            return increment + current_output;
+            return (current_output + increment) < 0.01 && (current_output + increment) > -0.01 ? 0 : current_output + increment;
         } else {
-            return current_output;
+            return current_output < 0.01 && current_output > -0.01 ? 0 : current_output;
         }
     }
     
@@ -65,7 +64,7 @@ public class Drive implements Movement {
        left = ramp(left, _x_prev, Params.x_ramp_increment);
        right = ramp(right, _y_prev, Params.y_ramp_increment);
 
-       left_drive.set(left);
+       left_drive.set(-left);
        right_drive.set(right);
       _x_prev = left;
       _y_prev = right;
@@ -78,7 +77,7 @@ public class Drive implements Movement {
             this.tankdrive(x * 0.75, -x * 0.75);
         }
         else {
-            double left = x+y;
+            double left = x+y * -1.0;
             double right = y-x;
             left = Utility.clamp(left, -1.0, 1.0);
             right = Utility.clamp(right, -1.0, 1.0);        
