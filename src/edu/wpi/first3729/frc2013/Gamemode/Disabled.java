@@ -15,6 +15,7 @@ public class Disabled extends GameMode {
     Disabled(Robot robot) {
         super(robot);
     }
-    //do absolutley nothing
-    
+    public void setup() {}
+    public void run() {}
+    //do absolutley nothing   
 }

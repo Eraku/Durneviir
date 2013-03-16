@@ -5,13 +5,15 @@
  */
 package edu.wpi.first3729.frc2013.Gamemode;
 
-//import edu.wpi.first3729.frc2013.inputs.*;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first3729.frc2013.inputs.*;
 import edu.wpi.first3729.frc2013.Movement.*;
 import edu.wpi.first3729.frc2013.Robot;
 
 /*
  *
  * @author teddy
+ *
  */
 public abstract class GameMode implements Movement {
     protected Robot _robot;
@@ -34,12 +36,12 @@ public abstract class GameMode implements Movement {
      * @param robot
      * @return
      */     
-    public static GameMode toautonomous(GameMode mode) {
+    public static GameMode toautonomous(GameMode mode, Robot robot) {
         return toautonomous(mode, mode._robot);
     }
     
-    public static GameMode toautonomous(GameMode mode, Robot robot) {
-        GameMode ret = new Autonomous(robot);
+    public static GameMode toautonomous(GameMode mode, Robot robot, Drive drv, AxisCamera cam) {
+        GameMode ret = new Autonomous(drv, cam, robot);
         if (mode != null) {
             ret._drive = mode._drive;
 //            ret._shooter = mode._shooter;
@@ -53,11 +55,11 @@ public abstract class GameMode implements Movement {
         return ret;
     }
        
-    public static GameMode toteleoperated(GameMode mode) {
+    public static GameMode toteleoperated(GameMode mode, Robot robot) {
         return toteleoperated(mode, mode._robot);
     }   
-    public static GameMode toteleoperated(GameMode mode, Robot robot) {
-        GameMode ret = new Teleoperated(robot);
+    public static GameMode toteleoperated(GameMode mode, Robot robot, Input imanager, Drive drv) {
+        GameMode ret = new Teleoperated(imanager, drv, robot);
         if (mode != null) {
             ret._drive = mode._drive;
 //            ret._climber = mode._climber;
@@ -68,7 +70,6 @@ public abstract class GameMode implements Movement {
 //            ret._shooter = new Shooter(ret);
             ret.setup();
         }
-//        ret._manipulator.lift(0);
         return ret;
     }
     
@@ -88,7 +89,5 @@ public abstract class GameMode implements Movement {
             ret.setup();
         }
         return ret;
-    }
-    
-    public void init() {}       
+    } 
 }
