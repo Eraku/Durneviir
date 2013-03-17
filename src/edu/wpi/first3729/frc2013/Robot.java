@@ -39,12 +39,11 @@ public class Robot extends IterativeRobot {
     private Teleoperated teleop;
     private Autonomous auto;
 //    private Climber climb;
-//    private Shooter shoot;
     private AxisCamera camera;
     private DriverStationLCD ds = DriverStationLCD.getInstance();
     /* Line 1 = initalizing reports then current Game mode
      * Line 2 = current Drive mode
-     * Line 3 = current Shooter speed - TODO
+     * Line 3 = current Shooter speed
      */
     
     /**
@@ -69,6 +68,7 @@ public class Robot extends IterativeRobot {
         this.input_manager.setdrivemode(Params.default_drive_mode);
         this.drive = new Drive();
         this.drive.locked();
+        this.shoot = new Shooter();
         this.teleop = new Teleoperated(input_manager, shoot, drive, null);
         this.auto = new Autonomous(drive, camera, null);
         this.camera = AxisCamera.getInstance(Params.cameraIP);

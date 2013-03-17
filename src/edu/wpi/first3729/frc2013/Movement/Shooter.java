@@ -5,6 +5,7 @@
  */
 package edu.wpi.first3729.frc2013.Movement;
 
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Victor;
@@ -27,6 +28,7 @@ public class Shooter implements Movement {
     private Input _input_manager;
     protected GameMode _mode;
     protected JoystickAttack3 _input;
+    private DriverStationLCD ds = DriverStationLCD.getInstance(); 
     private double shooterspeed = .65;
     private boolean shooter_state;
     private int angleadj_state, loader_state, intake_state;
@@ -34,25 +36,26 @@ public class Shooter implements Movement {
     public Shooter(GameMode mode){
         this._mode = mode;
     }
-    
-    public void setup(GameMode mode, Input imanager) {
-        this._input_manager = imanager;
+    public Shooter() {
         this._input = new JoystickAttack3(0);
         this.intakelimit0 = new DigitalInput(Params.intake0_limitswitch_port);
         this.intakelimit1 = new DigitalInput(Params.intake1_limitswitch_port);
         this._intake = new Relay(Params.intake_relayport);
+        this._angleadj = new Relay(Params.angleadj_relayport);
+        this._loader = new Relay(Params.loader_relayport);
+        this._shooter = new Victor(Params.shooterport);
+    }
+    
+    public void setup(GameMode mode, Input imanager) {
+        this._input_manager = imanager;
+        this._mode = mode;
         this._intake.setDirection(Relay.Direction.kBoth);
         this.intake(0);
-        this._angleadj = new Relay(Params.angleadj_relayport);
         this._angleadj.setDirection(Relay.Direction.kBoth);
         this.adjangle(0);
-        this._loader = new Relay(Params.loader_relayport);
         this._loader.setDirection(Relay.Direction.kBoth);
         this.load(0);
-        this._shooter = new Victor(Params.shooterport);
         this.shoot(0.0);
-        this._mode = mode;
-        this.getinput();
     }
     public void run() {
         this.getinput();
@@ -65,14 +68,17 @@ public class Shooter implements Movement {
         if (this._input_manager.checkbutton(0, 3)) {
             shooterspeed = shooterspeed + .05;
             shooter_state = true;
-        }
-        else if (this._input_manager.checkbutton(0, 2)) {
+        } else if (this._input_manager.checkbutton(0, 2)) {
             shooterspeed = shooterspeed - .05;
             shooter_state = true;
         }
         
         if (this._input_manager.checkbutton(0, 1) && this.intakelimit1.get()) {
             intake_state = 1;
+        } else if (this.intakelimit0.get()) {
+            intake_state = -1;
+        } else {
+            intake_state = 0;
         }
         
         if (this._input_manager.checkbutton(0, 5)) {
@@ -83,13 +89,14 @@ public class Shooter implements Movement {
             this.loader_state = 0;
         }
 
-        if (this._input_manager.checkbutton(0, 13)) {
+        if (this._input_manager.checkbutton(0, 9)) {
             this.angleadj_state = 1;
-        } else if (this._input_manager.checkbutton(0, 12)) {
+        } else if (this._input_manager.checkbutton(0, 8)) {
             this.angleadj_state = -1;
         } else {
             this.angleadj_state = 0;
         }
+        ds.println(DriverStationLCD.Line.kUser3, 1, "Current Shooter speed: " + shooterspeed);
     }
     
     public void adjangle(Relay.Value state) {

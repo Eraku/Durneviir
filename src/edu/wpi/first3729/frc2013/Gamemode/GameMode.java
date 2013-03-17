@@ -27,7 +27,7 @@ public abstract class GameMode implements Movement {
     }
        public void setup() {
            this._drive.setup();
-//           this._shooter.setup();
+           this._shooter.setup();
 //           this._climber.setup();
        }
     /**
@@ -44,11 +44,11 @@ public abstract class GameMode implements Movement {
         GameMode ret = new Autonomous(drv, cam, robot);
         if (mode != null) {
             ret._drive = mode._drive;
-//            ret._shooter = mode._shooter;
+            ret._shooter = mode._shooter;
 //            ret._climber = mode._climber;
         } else {
             ret._drive = new Drive(ret);
-//            ret._shooter = new Shooter(ret);
+            ret._shooter = new Shooter(ret);
 //            ret._climber = new Climber(ret);
             ret.setup();
         }
@@ -63,11 +63,11 @@ public abstract class GameMode implements Movement {
         if (mode != null) {
             ret._drive = mode._drive;
 //            ret._climber = mode._climber;
-//            ret._shooter = mode._shooter;
+            ret._shooter = mode._shooter;
         } else {
             ret._drive = new Drive(ret);
 //            ret._climber = new Climber(ret);
-//            ret._shooter = new Shooter(ret);
+            ret._shooter = new Shooter(ret);
             ret.setup();
         }
         return ret;
@@ -81,11 +81,11 @@ public abstract class GameMode implements Movement {
         if (mode != null) {
             ret._drive = mode._drive;
 //            ret._climber = mode._climber;
-//            ret._shooter = mode._shooter;
+            ret._shooter = mode._shooter;
         } else {
             ret._drive = new Drive(ret);
 //            ret._climber = new Climber(ret);
-//            ret._shooter = new Shooter(ret);
+            ret._shooter = new Shooter(ret);
             ret.setup();
         }
         return ret;

@@ -19,7 +19,6 @@ import edu.wpi.first3729.frc2013.utilities.*;
 public class Teleoperated extends GameMode {
     public int drive_mode;
     private Input _input_manager;
-//    private Drive _drive;
     private double x = 0.0, y = 0.0, left = 0.0, right = 0.0, scalefactor = 0.0;
     private boolean polarity = false;
     private DriverStationLCD ds = DriverStationLCD.getInstance();
@@ -38,7 +37,7 @@ public class Teleoperated extends GameMode {
         this._input_manager.setdrivemode(Input.arcadecontroller);
         this._drive.locked();
         this.changedrivemode();
-//        this._shooter.;
+        this._shooter.setup();
     }
     public void changedrivemode() {
         // Button 6, arcade drive 2 joysticks
