@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
         this.drive.locked();
         this.shoot = new Shooter();
         this.teleop = new Teleoperated(input_manager, shoot, drive, null);
-        this.auto = new Autonomous(drive, shoot, camera, null);
+        this.auto = new Autonomous(drive, shoot, null);
         this.camera = AxisCamera.getInstance(Params.cameraIP);
         this.camera.writeResolution(Params.cameraresolution);
         this.camera.writeMaxFPS(Params.cameraFPS);       
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
         this.getWatchdog().setExpiration(Params.default_watchdog_time);        
         // Stop timer
         setuptimer.stop();      
-        ds.println(DriverStationLCD.Line.kUser2, 1,"=== DONE IN " + setuptimer.get() * .001 + " MS ===");
+        ds.println(DriverStationLCD.Line.kUser2, 1,"=== DONE IN " + setuptimer.get() + " MS ===");
     }
 
     public void disabledInit() {
