@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
 public class Params {
     public static final int left_drive_port = 1;
     public static final int right_drive_port = 2;
-    public static final int drive_joy = 1;
     public static final int default_drive_mode = 2;
     public static final int shooterport = 5;
     public static final int intake_relayport = 1;
@@ -22,6 +21,8 @@ public class Params {
     public static final int intake0_limitswitch_port = 1;
     public static final int intake1_limitswitch_port = 2;
     public static final double drive_creep_scale_factor = 0.2;
+    public static final int shooter_joy = 1;
+    public static final int drive_joy = 3;
     public static final String cameraIP = "10.37.29.11";
     public static final AxisCamera.ResolutionT cameraresolution = AxisCamera.ResolutionT.k640x480;
     public static final int cameraFPS = 24;

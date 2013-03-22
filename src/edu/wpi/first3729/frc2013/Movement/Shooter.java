@@ -8,6 +8,7 @@ package edu.wpi.first3729.frc2013.Movement;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 
 import edu.wpi.first3729.frc2013.Gamemode.*;
@@ -32,12 +33,13 @@ public class Shooter implements Movement {
     private double shooterspeed = .65;
     private boolean shooter_state;
     private int angleadj_state, loader_state, intake_state;
+    private Timer shootertimer = new Timer();
     
     public Shooter(GameMode mode){
         this._mode = mode;
     }
     public Shooter() {
-        this._input = new JoystickAttack3(0);
+        this._input = new JoystickAttack3(Params.shooter_joy);
         this.intakelimit0 = new DigitalInput(Params.intake0_limitswitch_port);
         this.intakelimit1 = new DigitalInput(Params.intake1_limitswitch_port);
         this._intake = new Relay(Params.intake_relayport);
@@ -50,10 +52,10 @@ public class Shooter implements Movement {
         this._input_manager = imanager;
         this._mode = mode;
         this._intake.setDirection(Relay.Direction.kBoth);
-        this.intake(0);
         this._angleadj.setDirection(Relay.Direction.kBoth);
-        this.adjangle(0);
         this._loader.setDirection(Relay.Direction.kBoth);
+        this.intake(0);
+        this.adjangle(0);
         this.load(0);
         this.shoot(0.0);
     }
@@ -64,20 +66,25 @@ public class Shooter implements Movement {
         this.shoot(this.shooter_state);
         this.load(this.loader_state);
     }
-    public void getinput() {
+    public void getinput() {       
         if (this._input_manager.checkbutton(0, 3)) {
             shooterspeed = shooterspeed + .05;
             shooter_state = true;
+            shootertimer.start();
         } else if (this._input_manager.checkbutton(0, 2)) {
             shooterspeed = shooterspeed - .05;
             shooter_state = true;
+            shootertimer.start();
         }
-        
-        if (this._input_manager.checkbutton(0, 1) && this.intakelimit1.get()) {
+               
+        if (this._input_manager.checkbutton(0, 1) && this.intakelimit0.get()) {
             intake_state = 1;
-        } else if (this.intakelimit0.get()) {
+        } else if (this.intakelimit1.get()) {
             intake_state = -1;
         } else {
+            while(!intakelimit0.get() && !intakelimit1.get()) {
+                intake_state = -1;
+            }
             intake_state = 0;
         }
         
@@ -140,26 +147,37 @@ public class Shooter implements Movement {
     }
     
     public void shoot(boolean state) {
-        if (state) {
-            this.shoot(shooterspeed);
-        } else {
-            this.shoot(0.0);
+        for (double st = shootertimer.get(); st < 4000; st = shootertimer.get()) {
+            if (state) {
+                this.shoot(shooterspeed);
+            } else {
+                this.shoot(0.0);
+            }
         }
+        shootertimer.stop();
+        shootertimer.reset();
     }
     public void shoot(double speed) {
-        this._shooter.set(shooterspeed);
+        this._shooter.set(speed);
     }
     
     public void intake(Relay.Value state) {
         this._intake.set(state);
     }
     public void intake(int state) {
-        if (state > 0) {
-            this.intake(Relay.Value.kForward);
-        } else if (state < 0) {
-            this.intake(Relay.Value.kReverse);
-        } else {
-            this.intake(Relay.Value.kOff);
+        switch (state){
+            case 1:
+                this.intake(Relay.Value.kForward);
+                break;
+            case 0:
+                this.intake(Relay.Value.kOff);
+                break;
+            case -1:
+                this.intake(Relay.Value.kReverse);
+                break;
+            default:
+                this.intake(Relay.Value.kOff);
+                break;
         }
     }
 

@@ -6,9 +6,10 @@
 package edu.wpi.first3729.frc2013.Gamemode;
 
 import edu.wpi.first.wpilibj.camera.AxisCamera;
-import edu.wpi.first3729.frc2013.inputs.*;
+
 import edu.wpi.first3729.frc2013.Movement.*;
 import edu.wpi.first3729.frc2013.Robot;
+import edu.wpi.first3729.frc2013.inputs.*;
 
 /*
  *
@@ -40,8 +41,8 @@ public abstract class GameMode implements Movement {
         return toautonomous(mode, mode._robot);
     }
     
-    public static GameMode toautonomous(GameMode mode, Robot robot, Drive drv, AxisCamera cam) {
-        GameMode ret = new Autonomous(drv, cam, robot);
+    public static GameMode toautonomous(GameMode mode, Robot robot, Drive drv, Shooter shoot, AxisCamera cam) {
+        GameMode ret = new Autonomous(drv, shoot, cam, robot);
         if (mode != null) {
             ret._drive = mode._drive;
             ret._shooter = mode._shooter;

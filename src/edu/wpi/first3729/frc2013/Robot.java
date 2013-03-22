@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
         this.drive.locked();
         this.shoot = new Shooter();
         this.teleop = new Teleoperated(input_manager, shoot, drive, null);
-        this.auto = new Autonomous(drive, camera, null);
+        this.auto = new Autonomous(drive, shoot, camera, null);
         this.camera = AxisCamera.getInstance(Params.cameraIP);
         this.camera.writeResolution(Params.cameraresolution);
         this.camera.writeMaxFPS(Params.cameraFPS);       
@@ -82,6 +82,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void disabledInit() {
+        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going disabled.");
         this._mode = GameMode.todisabled(this._mode, this);
     }
@@ -90,6 +91,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going teleoperated.");
         this._mode = GameMode.toteleoperated(this._mode, this);
         this._mode.setup();
@@ -100,6 +102,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit() {
+        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going autonomous.");
         this._mode = GameMode.toautonomous(this._mode, this);
         this._mode.setup();
@@ -108,7 +111,4 @@ public class Robot extends IterativeRobot {
         this.getWatchdog().feed();
         this.auto.run();
     }
-
-    public void testPeriodic() {
-    } 
 }
