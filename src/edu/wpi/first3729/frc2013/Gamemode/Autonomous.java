@@ -73,23 +73,23 @@ public class Autonomous extends GameMode {
                 this._shooter.intake(1);
                 break;
             case 3:
-                this._shooter.load(1);
+                //this._shooter.load(1);
                 this._shooter.intake(-1);
                 break;
             case 4:
                 this._shooter.intake(1);
-                this._shooter.load(0);
+                //this._shooter.load(0);
                 break;
             case 5:
                 this._shooter.intake(-1);
-                this._shooter.load(1);
+                //this._shooter.load(1);
                 break;
             case 6:
                 this._shooter.intake(1);
                 break;
             case 7:
                 this._shooter.shoot(0);
-                this._shooter.load(0);
+                //this._shooter.load(0);
                 this._drive.tankdrive(-Params.auto_drivespeed, -Params.auto_drivespeed);
                 break;
             case 8:
@@ -100,7 +100,7 @@ public class Autonomous extends GameMode {
                 this._shooter.intake(0);
                 break;
             default:
-                this._shooter.load(0);
+                //this._shooter.load(0);
                 this._shooter.shoot(0);
                 this._drive.tankdrive(0, 0);
         }

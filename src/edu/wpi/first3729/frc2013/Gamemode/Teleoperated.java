@@ -41,19 +41,19 @@ public class Teleoperated extends GameMode {
     }
     public void changedrivemode() {
         // Button 6, arcade drive 2 joysticks
-        if (this._input_manager.checkbutton(1, 6)) {
+        if (this._input_manager.checkbutton(0, 6)) {
             this._input_manager.setdrivemode(Input.arcade);
         }
         // Button 7, arcade drive 1 joystick 1 controller
-        if (this._input_manager.checkbutton(1, 7)) {
+        if (this._input_manager.checkbutton(0, 7)) {
             this._input_manager.setdrivemode(Input.arcadecontroller);
         }
         // Button 10, tank drive 3 joysticks
-        if (this._input_manager.checkbutton(1, 10)) {
+        if (this._input_manager.checkbutton(0, 10)) {
             this._input_manager.setdrivemode(Input.tank);
         }
         // Button 11, lock all controls
-        if (this._input_manager.checkbutton(1, 11)) {
+        if (this._input_manager.checkbutton(0, 11)) {
             this._input_manager.setdrivemode(Input.locked);
         }
         ds.println(DriverStationLCD.Line.kUser2, 1, "Drive mode: " + drive_mode);

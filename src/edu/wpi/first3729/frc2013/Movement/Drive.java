@@ -14,8 +14,10 @@ import edu.wpi.first3729.frc2013.utilities.*;
  * @author teddy
  */
 public class Drive implements Movement {
-    private Talon left_drive;
-    private Talon right_drive;
+    private Talon left_drive0;
+    private Talon left_drive1;
+    private Talon right_drive0;
+    private Talon right_drive1;
     private Input _input_manager;
     protected GameMode _mode;
     protected ControllerInterlink _input;
@@ -33,15 +35,16 @@ public class Drive implements Movement {
     public void setup(GameMode mode, Input imanager) {
         this._input_manager = imanager;
         this._input = new ControllerInterlink(Params.drive_joy);
-        this._drive = new Talon(Params.left_drive_port,Params.right_drive_port);
         this._mode = mode;
         this.getinput();
     }
     
     public Drive() {
         _y_prev = _x_prev = 0.0;
-        left_drive = new Talon(Params.left_drive_port);
-        right_drive = new Talon(Params.right_drive_port);
+        left_drive0 = new Talon(Params.left0_drive_port);
+        left_drive1 = new Talon(Params.left1_drive_port);
+        right_drive0 = new Talon(Params.right0_drive_port);
+        right_drive1 = new Talon(Params.right1_drive_port);
     }
     public void getinput() {
         this._x = this._input.get_x();
@@ -53,8 +56,10 @@ public class Drive implements Movement {
        left = Utility.ramp(left, _x_prev, Params.x_ramp_increment);
        right = Utility.ramp(right, _y_prev, Params.y_ramp_increment);
 
-       left_drive.set(-left);
-       right_drive.set(right);
+       left_drive0.set(-left);
+       left_drive1.set(-left);
+       right_drive0.set(right);
+       right_drive1.set(right);
       _x_prev = left;
       _y_prev = right;
     }
@@ -70,15 +75,19 @@ public class Drive implements Movement {
             double right = y-x;
             left = Utility.clamp(left, -1.0, 1.0);
             right = Utility.clamp(right, -1.0, 1.0);        
-            left_drive.set(left);
-            right_drive.set(right);
+            left_drive0.set(left);
+            left_drive1.set(left);
+            right_drive0.set(right);
+            right_drive1.set(right);
         }
         _x_prev = x;
         _y_prev = y;
     }
     public void locked() {
-        left_drive.set(0.0);
-        right_drive.set(0.0);
+        left_drive0.set(0.0);
+        left_drive1.set(0.0);
+        right_drive0.set(0.0);
+        right_drive1.set(0.0);
     }
 
     public void setup() {

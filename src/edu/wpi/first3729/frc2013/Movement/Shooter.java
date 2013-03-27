@@ -25,14 +25,14 @@ import edu.wpi.first3729.frc2013.utilities.*;
 public class Shooter implements Movement {
     private Victor _shooter;
     private DigitalInput intakelimit0, intakelimit1;
-    protected Relay _loader, _intake, _angleadj;
+    protected Relay  _intake, _angleadj;
     private Input _input_manager;
     protected GameMode _mode;
     protected JoystickAttack3 _input;
     private DriverStationLCD ds = DriverStationLCD.getInstance(); 
     private double shooterspeed = .65;
     private boolean shooter_state;
-    private int angleadj_state, loader_state, intake_state;
+    private int angleadj_state, intake_state;
     private Timer shootertimer = new Timer();
     
     public Shooter(GameMode mode){
@@ -44,7 +44,7 @@ public class Shooter implements Movement {
         this.intakelimit1 = new DigitalInput(Params.intake1_limitswitch_port);
         this._intake = new Relay(Params.intake_relayport);
         this._angleadj = new Relay(Params.angleadj_relayport);
-        this._loader = new Relay(Params.loader_relayport);
+//        this._loader = new Relay(Params.loader_relayport);
         this._shooter = new Victor(Params.shooterport);
     }
     
@@ -53,10 +53,10 @@ public class Shooter implements Movement {
         this._mode = mode;
         this._intake.setDirection(Relay.Direction.kBoth);
         this._angleadj.setDirection(Relay.Direction.kBoth);
-        this._loader.setDirection(Relay.Direction.kBoth);
+//        this._loader.setDirection(Relay.Direction.kBoth);
         this.intake(0);
         this.adjangle(0);
-        this.load(0);
+//        this.load(0);
         this.shoot(0.0);
     }
     public void run() {
@@ -64,7 +64,7 @@ public class Shooter implements Movement {
         this.adjangle(this.angleadj_state);
         this.intake(this.intake_state);
         this.shoot(this.shooter_state);
-        this.load(this.loader_state);
+//        this.load(this.loader_state);
     }
     public void getinput() {       
         if (this._input_manager.checkbutton(0, 3)) {
@@ -88,17 +88,17 @@ public class Shooter implements Movement {
             intake_state = 0;
         }
         
-        if (this._input_manager.checkbutton(0, 5)) {
-            this.loader_state = 1;
-        } else if (this._input_manager.checkbutton(0, 4)) {
-            this.loader_state = -1;
-        } else {
-            this.loader_state = 0;
-        }
+//        if (this._input_manager.checkbutton(0, 5)) {
+//            this.loader_state = 1;
+//        } else if (this._input_manager.checkbutton(0, 4)) {
+//            this.loader_state = -1;
+//        } else {
+//            this.loader_state = 0;
+//        }
 
-        if (this._input_manager.checkbutton(0, 9)) {
+        if (this._input_manager.checkbutton(0, 5)) {
             this.angleadj_state = 1;
-        } else if (this._input_manager.checkbutton(0, 8)) {
+        } else if (this._input_manager.checkbutton(0, 4)) {
             this.angleadj_state = -1;
         } else {
             this.angleadj_state = 0;
@@ -126,25 +126,25 @@ public class Shooter implements Movement {
         }
     }
     
-    public void load(Relay.Value state) {
-        this._loader.set(state);
-    }
-    public void load (int state) {
-        switch (state){
-            case 1:
-                this.load(Relay.Value.kForward);
-                break;
-            case 0:
-                this.load(Relay.Value.kOff);
-                break;
-            case -1:
-                this.load(Relay.Value.kReverse);
-                break;
-            default:
-                this.load(Relay.Value.kOff);
-                break;
-        }
-    }
+//    public void load(Relay.Value state) {
+//        this._loader.set(state);
+//    }
+//    public void load (int state) {
+//        switch (state){
+//            case 1:
+//                this.load(Relay.Value.kForward);
+//                break;
+//            case 0:
+//                this.load(Relay.Value.kOff);
+//                break;
+//            case -1:
+//                this.load(Relay.Value.kReverse);
+//                break;
+//            default:
+//                this.load(Relay.Value.kOff);
+//                break;
+//        }
+//    }
     
     public void shoot(boolean state) {
         for (double st = shootertimer.get(); st < 4000; st = shootertimer.get()) {
