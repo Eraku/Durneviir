@@ -5,11 +5,11 @@
  */
 package edu.wpi.first3729.frc2013.Gamemode;
 
-import edu.wpi.first.wpilibj.camera.AxisCamera;
+//import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first3729.frc2013.Movement.*;
-import edu.wpi.first3729.frc2013.Robot;
+//import edu.wpi.first3729.frc2013.Robot;
 import edu.wpi.first3729.frc2013.utilities.Params;
 
 
@@ -17,8 +17,10 @@ import edu.wpi.first3729.frc2013.utilities.Params;
  *
  * @author teddy
  */
-public class Autonomous extends GameMode {
+public class Autonomous {
     private Timer _timer;
+    private Drive _drive;
+    private Shooter _shooter;
     private int state = 0;
 
     /**
@@ -26,8 +28,7 @@ public class Autonomous extends GameMode {
      * @param drv
      * @param cam
      */
-    public Autonomous(Drive drv, Shooter shoot, Robot robot) {
-        super(robot);
+    public Autonomous(Drive drv, Shooter shoot) {
         this._drive = drv;
         this._shooter = shoot;
     }

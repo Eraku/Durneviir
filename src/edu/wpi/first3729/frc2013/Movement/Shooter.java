@@ -35,9 +35,6 @@ public class Shooter implements Movement {
     private int angleadj_state, intake_state;
     private Timer shootertimer = new Timer();
     
-    public Shooter(GameMode mode){
-        this._mode = mode;
-    }
     public Shooter() {
         this._input = new JoystickAttack3(Params.shooter_joy);
         this.intakelimit0 = new DigitalInput(Params.intake0_limitswitch_port);

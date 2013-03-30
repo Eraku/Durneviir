@@ -69,11 +69,11 @@ public class Robot extends IterativeRobot {
         this.drive = new Drive();
         this.drive.locked();
         this.shoot = new Shooter();
-        this.teleop = new Teleoperated(input_manager, shoot, drive, null);
-        this.auto = new Autonomous(drive, shoot, null);
-        this.camera = AxisCamera.getInstance(Params.cameraIP);
-        this.camera.writeResolution(Params.cameraresolution);
-        this.camera.writeMaxFPS(Params.cameraFPS);       
+        this.teleop = new Teleoperated(input_manager, shoot, drive);
+        this.auto = new Autonomous(drive, shoot);
+//        this.camera = AxisCamera.getInstance(Params.cameraIP);
+//        this.camera.writeResolution(Params.cameraresolution);
+//        this.camera.writeMaxFPS(Params.cameraFPS);       
         // Set up Watchdog
         this.getWatchdog().setExpiration(Params.default_watchdog_time);        
         // Stop timer
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
         ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going disabled.");
-        this._mode = GameMode.todisabled(this._mode, this);
+        //this._mode = GameMode.todisabled(this._mode, this);
     }
     public void disabledPeriodic() {
         // Nothing
@@ -93,8 +93,8 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
         ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going teleoperated.");
-        this._mode = GameMode.toteleoperated(this._mode, this);
-        this._mode.setup();
+        //this._mode = GameMode.toteleoperated(this._mode, this);
+        this.teleop.setup();
     }
     public void teleopPeriodic() {
         this.getWatchdog().feed();
@@ -104,8 +104,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going autonomous.");
-        this._mode = GameMode.toautonomous(this._mode, this);
-        this._mode.setup();
+        //this._mode = GameMode.toautonomous(this._mode, this);
+        this.auto.setup();
     }   
     public void autonomousPeriodic() {
         this.getWatchdog().feed();

@@ -26,16 +26,11 @@ public class Drive implements Movement {
     private double _y_prev;
     private double _x,_y;
 
-    public Drive(GameMode ret) {
-    }
-
     public void run() {
         
     }
-    public void setup(GameMode mode, Input imanager) {
-        this._input_manager = imanager;
+    public void setup() {
         this._input = new ControllerInterlink(Params.drive_joy);
-        this._mode = mode;
         this.getinput();
     }
     
@@ -71,14 +66,15 @@ public class Drive implements Movement {
             this.tankdrive(x * 0.75, -x * 0.75);
         }
         else {
-            double left = x+y * -1.0;
+            double left = x+y;
             double right = y-x;
             left = Utility.clamp(left, -1.0, 1.0);
             right = Utility.clamp(right, -1.0, 1.0);        
-            left_drive0.set(left);
+            left_drive0.set(-left);
             left_drive1.set(left);
-            right_drive0.set(right);
+            right_drive0.set(-right);
             right_drive1.set(right);
+            System.out.println("Left: " + left + "Right: " + right + " .");
         }
         _x_prev = x;
         _y_prev = y;
@@ -89,8 +85,4 @@ public class Drive implements Movement {
         right_drive0.set(0.0);
         right_drive1.set(0.0);
     }
-
-    public void setup() {
-    }
-
 }
