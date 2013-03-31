@@ -6,7 +6,7 @@
 package edu.wpi.first3729.frc2013.Movement;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first3729.frc2013.Gamemode.*;
+
 import edu.wpi.first3729.frc2013.inputs.*;
 import edu.wpi.first3729.frc2013.utilities.*;
 /**
@@ -18,15 +18,30 @@ public class Drive {
     private Talon left_drive1;
     private Talon right_drive0;
     private Talon right_drive1;
-    //private Input _input_manager;
+    private Input _input_manager;
     protected ControllerInterlink _input;
     protected Talon _drive;
     private double _x_prev;
     private double _y_prev;
     private double _x,_y;
+    public double x = 0.0, y = 0.0, left = 0.0, right = 0.0;
 
     public void run() {
-        
+        // Drive robot based on drive mode
+        switch (this._input_manager.getdrivemode()) {
+            case Input.arcade:
+                this.arcadedrive(this.x, this.y);
+                break;
+            case Input.arcadecontroller:
+                this.arcadedrive(this.x, this.y);
+                break;
+            case Input.tank:
+                this.tankdrive(this.left, this.right);
+                break;
+            case Input.locked:
+                this.locked();
+                break;
+        }
     }
     public void setup() {
         this._input = new ControllerInterlink(Params.drive_joy);
@@ -73,7 +88,7 @@ public class Drive {
             left_drive1.set(-left);
             right_drive0.set(right);
             right_drive1.set(right);
-            System.out.println("Left: " + left + "Right: " + right + " .");
+            if (Params.testing){System.out.println("Left: " + left + "Right: " + right + " .");}
         }
         _x_prev = x;
         _y_prev = y;

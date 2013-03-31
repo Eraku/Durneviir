@@ -20,7 +20,7 @@ public class Teleoperated {
     private Input _input_manager;
     private Drive _drive;
     private Shooter _shooter;
-    private double x = 0.0, y = 0.0, left = 0.0, right = 0.0, scalefactor = 0.0;
+    private double x = 0.0, y = 0.0, scalefactor = 0.0;
     private boolean polarity = false;
     private DriverStationLCD ds = DriverStationLCD.getInstance();
            
@@ -34,10 +34,9 @@ public class Teleoperated {
      * @brief locks drive, locks input
      */
     public void setup() {
-        this._input_manager.setdrivemode(Input.arcadecontroller);
+        this._input_manager.setdrivemode(Params.default_drive_mode);
         this._drive.setup();
         this._drive.locked();
-        //this.changedrivemode();
         this._shooter.setup(_input_manager);
     }
     public void changedrivemode() {
@@ -46,43 +45,32 @@ public class Teleoperated {
             this._input_manager.setdrivemode(Input.arcade);
         }
         // Button 7, arcade drive 1 joystick 1 controller
-        if (this._input_manager.checkbutton(0, 7)) {
+        else if (this._input_manager.checkbutton(0, 7)) {
             this._input_manager.setdrivemode(Input.arcadecontroller);
         }
         // Button 10, tank drive 3 joysticks
-        if (this._input_manager.checkbutton(0, 10)) {
+        else if (this._input_manager.checkbutton(0, 10)) {
             this._input_manager.setdrivemode(Input.tank);
         }
         // Button 11, lock all controls
-        if (this._input_manager.checkbutton(0, 11)) {
+        else if (this._input_manager.checkbutton(0, 11)) {
             this._input_manager.setdrivemode(Input.locked);
+        } else {
+            this._input_manager.setdrivemode(Params.default_drive_mode);
         }
         ds.println(DriverStationLCD.Line.kUser2, 1, "Drive mode: " + drive_mode);
         ds.updateLCD();
     }
 
     public void run() {
-        System.out.println("in teleop.run");
+        if (Params.testing){System.out.println("in teleop.run");}
         // Update input fields
         this.getInput();
-        // Drive robot based on drive mode
-        switch (this._input_manager.getdrivemode()) {
-            case Input.arcade:
-                this._drive.arcadedrive(this.x, this.y);
-                break;
-            case Input.arcadecontroller:
-                this._drive.arcadedrive(this.x, this.y);
-                break;
-            case Input.tank:
-                this._drive.tankdrive(this.left, this.right);
-                break;
-            case Input.locked:
-                this._drive.locked();
-                break;
-        }
+        this._drive.run();
         this._shooter.run();
     }
     public void getInput() {
+        this.changedrivemode();
         drive_mode = this._input_manager.getdrivemode();
         if (this._input_manager.checkbutton(2, 2)) {
             this.scalefactor = Params.drive_creep_scale_factor;
@@ -96,7 +84,7 @@ public class Teleoperated {
         else {
             this.y = this._input_manager.get_y() * scalefactor;
         }
-        System.out.println("X: " + this.x + ", Y: " + this.y);
+        if (Params.testing){System.out.println("X: " + _drive.x + ", Y: " + _drive.y);}
         //this.polarity = this._input_manager.checkbutton(2, 2);
     }
 }

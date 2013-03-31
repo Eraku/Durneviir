@@ -51,41 +51,42 @@ public class Shooter {
         this.shoot(0.0);
     }
     public void run() {
-        System.out.println("in shooter.run");
+        if (Params.testing){System.out.println("in shooter.run");}
         this.getinput();
         this.adjangle(this.angleadj_state);
         this.intake(this.intake_state);
         this.shoot(this.shooter_state);
     }
     public void getinput() {       
-        System.out.println("in shooter.getInput()");
+        if (Params.testing){System.out.println("in shooter.getInput()");}
         if (this._input_manager.checkbutton(0, 5)) {
-            //shooterspeed = shooterspeed + .05;
             shooter_state = true;
             //shootertimer.start();
         } else if (this._input_manager.checkbutton(0, 4)) {
-            //shooterspeed = shooterspeed - .05;
             shooter_state = false;
-            //shootertimer.start();
         }
-          if (this._input_manager.checkbutton(0, 8)) {
-              intake_state = -1;
-          } else if (this._input_manager.checkbutton(0, 9)) {
-              intake_state = 1;
-          } else { intake_state = 0; }
+//        if (this._input_manager.checkbutton(0, 8)) {
+//            shooterspeed = shooterspeed - .05;
+//        } else if (this._input_manager.checkbutton(0, 9)) {
+//            shooterspeed = shooterspeed + .05;
+//       } else {}
+               
+        if (this._input_manager.checkbutton(0, 8)) {
+            intake_state = -1;
+        } else if (this._input_manager.checkbutton(0, 9)) {
+            intake_state = 1;
+        } else { intake_state = 0; }
 //        if (this._input_manager.checkbutton(0, 1) && this.intakelimit0.get()) {
 //            intake_state = 1;
 //        } else if (this._input_manager.checkbutton(0, 1) && this.intakelimit1.get()) {
 //            intake_state = -1;
 //        } else {
-//            while(!intakelimit0.get() && !intakelimit1.get()) {
-//                //intake_state = -1;
-//            }
+//            while(!intakelimit0.get() && !intakelimit1.get()) {}
 //            intake_state = 0;
 //        }
-        System.out.println("joy button 1: " + this._input_manager.checkbutton(0, 1));
-        System.out.println("intale0: " + this.intakelimit0.get());
-        System.out.println("intale1: " + this.intakelimit1.get());
+        if (Params.testing){System.out.println("joy button 1: " + this._input_manager.checkbutton(0, 1));
+        System.out.println("intake0: " + this.intakelimit0.get());
+        System.out.println("intake1: " + this.intakelimit1.get());}
 
         if (this._input_manager.checkbutton(0, 3)) {
             this.angleadj_state = 1;
@@ -102,7 +103,7 @@ public class Shooter {
         this._angleadj.set(state);
     }
     public void adjangle(int state) {
-        System.out.println("adjangle" + angleadj_state + " ");
+        if (Params.testing){System.out.println("adjangle" + angleadj_state + " ");}
         switch (state){
             case 1:
                 this.adjangle(Relay.Value.kForward);
@@ -120,9 +121,9 @@ public class Shooter {
     }
     
     public void shoot(boolean state) {
-        System.out.println("shoot state: " + shooter_state + " Shooterspeed: " + shooterspeed);
+        if (Params.testing){System.out.println("shoot state: " + shooter_state + " Shooterspeed: " + shooterspeed);}
         if (state) {
-//            for (double st = shootertimer.get(); st < 6000; st = shootertimer.get()) {
+//            for (double st = shootertimer.get(); st < 6.0; st = shootertimer.get()) {
 //                this.shoot(shooterspeed);
 //                System.out.println("Shooter timer: " + shootertimer.get() + " ");
 //            }
@@ -139,22 +140,24 @@ public class Shooter {
     }
     
     public void intake(Relay.Value state) {
-        System.out.println("intake relay value: " + state);
+        if (Params.testing){System.out.println("intake relay value: " + state);}
+        //this._intake.set(Relay.Value.kForward);
+        //this._intake.set(Relay.Value.kReverse);
         this._intake.set(state);
     }
     public void intake(int state) {
-        System.out.println("intake_state: " + intake_state);
+        if (Params.testing){System.out.println("intake_state: " + intake_state);}
         switch (state){
             case 1:
-                System.out.println("in shooter.intake, case 1");
+                if (Params.testing){System.out.println("in shooter.intake, case 1");}
                 this.intake(Relay.Value.kForward);
                 break;
             case 0:
-                System.out.println("in shooter.intake, case 0");
+                if (Params.testing){System.out.println("in shooter.intake, case 0");}
                 this.intake(Relay.Value.kOff);
                 break;
             case -1:
-                System.out.println("in shooter.intake, case -1");
+                if (Params.testing){System.out.println("in shooter.intake, case -1");}
                 this.intake(Relay.Value.kReverse);
                 break;
             default:
