@@ -9,7 +9,6 @@ package edu.wpi.first3729.frc2013.Gamemode;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first3729.frc2013.Movement.*;
-//import edu.wpi.first3729.frc2013.Robot;
 import edu.wpi.first3729.frc2013.utilities.Params;
 
 
