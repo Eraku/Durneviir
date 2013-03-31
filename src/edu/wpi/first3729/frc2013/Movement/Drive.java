@@ -13,13 +13,12 @@ import edu.wpi.first3729.frc2013.utilities.*;
  *
  * @author teddy
  */
-public class Drive implements Movement {
+public class Drive {
     private Talon left_drive0;
     private Talon left_drive1;
     private Talon right_drive0;
     private Talon right_drive1;
-    private Input _input_manager;
-    protected GameMode _mode;
+    //private Input _input_manager;
     protected ControllerInterlink _input;
     protected Talon _drive;
     private double _x_prev;
@@ -44,7 +43,7 @@ public class Drive implements Movement {
     public void getinput() {
         this._x = this._input.get_x();
         this._y = this._input.get_y();
-        this._input_manager.getdrivemode();
+        //this._input_manager.getdrivemode();
     }
       
     public void tankdrive(double left, double right) {
@@ -60,8 +59,8 @@ public class Drive implements Movement {
     }
     
     public void arcadedrive(double x, double y) {
-        x = Utility.ramp(x, _x_prev, Params.x_ramp_increment);
-        y = Utility.ramp(y, _y_prev, Params.y_ramp_increment);
+//        x = Utility.ramp(x, _x_prev, Params.x_ramp_increment);
+//        y = Utility.ramp(y, _y_prev, Params.y_ramp_increment);
         if ((y <= 0.1 && y > 0) || (y >= -0.1 && y < 0)) {
             this.tankdrive(x * 0.75, -x * 0.75);
         }
@@ -71,8 +70,8 @@ public class Drive implements Movement {
             left = Utility.clamp(left, -1.0, 1.0);
             right = Utility.clamp(right, -1.0, 1.0);        
             left_drive0.set(-left);
-            left_drive1.set(left);
-            right_drive0.set(-right);
+            left_drive1.set(-left);
+            right_drive0.set(right);
             right_drive1.set(right);
             System.out.println("Left: " + left + "Right: " + right + " .");
         }
