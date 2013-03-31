@@ -8,7 +8,6 @@ package edu.wpi.first3729.frc2013.Gamemode;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 
 import edu.wpi.first3729.frc2013.Movement.*;
-import edu.wpi.first3729.frc2013.Robot;
 import edu.wpi.first3729.frc2013.inputs.*;
 import edu.wpi.first3729.frc2013.utilities.*;
 
@@ -39,7 +38,7 @@ public class Teleoperated {
         this._drive.setup();
         this._drive.locked();
         //this.changedrivemode();
-        this._shooter.setup();
+        this._shooter.setup(_input_manager);
     }
     public void changedrivemode() {
         // Button 6, arcade drive 2 joysticks
@@ -59,12 +58,13 @@ public class Teleoperated {
             this._input_manager.setdrivemode(Input.locked);
         }
         ds.println(DriverStationLCD.Line.kUser2, 1, "Drive mode: " + drive_mode);
+        ds.updateLCD();
     }
 
     public void run() {
+        System.out.println("in teleop.run");
         // Update input fields
         this.getInput();
-        this._shooter.run();
         // Drive robot based on drive mode
         switch (this._input_manager.getdrivemode()) {
             case Input.arcade:
@@ -80,10 +80,11 @@ public class Teleoperated {
                 this._drive.locked();
                 break;
         }
+        this._shooter.run();
     }
     public void getInput() {
         drive_mode = this._input_manager.getdrivemode();
-        if (this._input_manager.gettwist(1) > 0) {
+        if (this._input_manager.checkbutton(2, 2)) {
             this.scalefactor = Params.drive_creep_scale_factor;
         } else {
             this.scalefactor = 1.0;
@@ -95,7 +96,7 @@ public class Teleoperated {
         else {
             this.y = this._input_manager.get_y() * scalefactor;
         }
-        //System.out.println("X: " + this.x + ", Y: " + this.y);
-        this.polarity = this._input_manager.checkbutton(2, 2);
+        System.out.println("X: " + this.x + ", Y: " + this.y);
+        //this.polarity = this._input_manager.checkbutton(2, 2);
     }
 }
