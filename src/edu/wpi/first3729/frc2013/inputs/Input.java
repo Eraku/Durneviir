@@ -73,7 +73,7 @@ public class Input{
             case arcade:
                 return this._joy1.getY();
             case arcadecontroller:
-                return this._controller1.getY();
+                return this._controller0.getY();
             case tank:
                 return this._joy1.getY();
             case locked:
