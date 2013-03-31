@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  * @author teddy
  */
 public class Params {
-    public static final int left0_drive_port = 1;
-    public static final int left1_drive_port = 2;
-    public static final int right0_drive_port = 3;
-    public static final int right1_drive_port = 4;
+    public static final int right0_drive_port = 1;
+    public static final int right1_drive_port = 2;
+    public static final int left0_drive_port = 3;
+    public static final int left1_drive_port = 4;
     public static final int default_drive_mode = 2;
     public static final int shooterport = 5;
     public static final int intake_relayport = 1;
@@ -30,7 +30,7 @@ public class Params {
     public static final int cameraFPS = 24;
     // Others
     //! The default expiration time of the Watchdog timer, in seconds
-    public static final double default_watchdog_time = 3.0;
+    public static final double default_watchdog_time = 10.0;
     //! Speed at which we drive in Autonomous
     public static final double auto_drivespeed = 0.35;
     //! Speed at which we turn in Autonomous
