@@ -10,12 +10,9 @@ import edu.wpi.first3729.frc2013.Robot;
  *
  * @author teddy
  */
-public class Disabled extends GameMode {
+public class Disabled {
 
     Disabled(Robot robot) {
-        super(robot);
     }
-    public void setup() {}
-    public void run() {}
     //do absolutley nothing   
 }
