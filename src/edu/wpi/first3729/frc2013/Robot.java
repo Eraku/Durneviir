@@ -32,14 +32,12 @@ import edu.wpi.first3729.frc2013.utilities.Params;
 public class Robot extends IterativeRobot {
     
     private Input input_manager;
-    private DriverStationLCD screen;
+//    private DriverStationLCD screen;
     private Drive drive;
     private Shooter shoot;
-    private GameMode _mode;
     private Teleoperated teleop;
     private Autonomous auto;
-//    private Climber climb;
-    private AxisCamera camera;
+//    private AxisCamera camera;
     private DriverStationLCD ds = DriverStationLCD.getInstance();
     /* Line 1 = initalizing reports then current Game mode
      * Line 2 = current Drive mode
@@ -61,7 +59,8 @@ public class Robot extends IterativeRobot {
         System.out.println("\t~> 2. A robot must obey the orders given to it by human beings,\n\t      except where such orders would conflict with the First Law.");
         System.out.println("\t~> 3. A robot must protect its own existence as long as\n\t      such protection does not conflict with the First or Second Laws.");
         // Initialize stuff
-        ds.println(DriverStationLCD.Line.kUser1, 1,"=== INITIALIZING ROBOT ===");       
+        ds.println(DriverStationLCD.Line.kUser1, 1,"=== INITIALIZING ROBOT ===");
+        ds.updateLCD();
         // Start timer
         setuptimer.start();
         this.input_manager = new Input();
@@ -78,22 +77,21 @@ public class Robot extends IterativeRobot {
         this.getWatchdog().setExpiration(Params.default_watchdog_time);        
         // Stop timer
         setuptimer.stop();      
-        ds.println(DriverStationLCD.Line.kUser2, 1,"=== DONE IN " + setuptimer.get() + " MS ===");
+        ds.println(DriverStationLCD.Line.kUser2, 1,"=== DONE IN " + (setuptimer.get()*1000) + " MS ===");
+        ds.updateLCD();
     }
 
     public void disabledInit() {
-        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going disabled.");
-        //this._mode = GameMode.todisabled(this._mode, this);
+        ds.updateLCD();
     }
     public void disabledPeriodic() {
         // Nothing
     }
 
     public void teleopInit() {
-        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going teleoperated.");
-        //this._mode = GameMode.toteleoperated(this._mode, this);
+        ds.updateLCD();
         this.teleop.setup();
     }
     public void teleopPeriodic() {
@@ -102,9 +100,8 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit() {
-        ds.updateLCD();
         ds.println(DriverStationLCD.Line.kUser1, 1,"Going autonomous.");
-        //this._mode = GameMode.toautonomous(this._mode, this);
+        ds.updateLCD();
         this.auto.setup();
     }   
     public void autonomousPeriodic() {
